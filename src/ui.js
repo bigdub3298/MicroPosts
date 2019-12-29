@@ -25,6 +25,26 @@ class UI {
     }
     this.posts.innerHTML = output;
   }
+
+  addPost(post) {
+    const div = document.createElement("div");
+    div.className = "card mb-3";
+
+    div.innerHTML = `
+    <div class="card-body">
+      <h4 class="card-title">${post.title}</h4>
+      <p class="card-text">${post.body}</p>
+      <a href="#" class="edit card-link" data-id="${post.id}"><i class="fa fa-edit"></i></a>
+      <a href="#" class="delete card-link" data-id="${post.id}"><i class="fa fa-remove"></i></a>
+    </div>`;
+
+    this.posts.appendChild(div);
+  }
+
+  clearInputs() {
+    this.titleInput.value = "";
+    this.bodyInput.value = "";
+  }
 }
 
 export const ui = new UI();
