@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", getPosts);
 
 ui.postSubmit.addEventListener("click", postAddSubmit);
 
+ui.posts.addEventListener("click", postDeleteSubmit);
+
 function getPosts() {
   http
     .get("http://localhost:3000/posts")
@@ -24,12 +26,27 @@ function postAddSubmit() {
       title,
       body
     };
-
-    ui.clearInputs();
-
     http
       .post("http://localhost:3000/posts", data)
-      .then(newPost => ui.addPost(newPost))
+      .then(newPost => {
+        ui.clearInputs();
+        ui.showAlert("Post Added", "alert alert-success");
+        ui.addPost(newPost);
+      })
+      .catch(err => console.log(err));
+  }
+}
+
+function postDeleteSubmit(e) {
+  e.preventDefault();
+  if (e.target.parentElement.classList.contains("delete")) {
+    const id = e.target.parentElement.dataset.id;
+    http
+      .delete(`http://localhost:3000/posts/${id}`)
+      .then(data => {
+        ui.showAlert("Post Deleted...", "alert alert-danger");
+        ui.deletePost(e.target.parentElement.parentElement.parentElement);
+      })
       .catch(err => console.log(err));
   }
 }

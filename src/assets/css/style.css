@@ -1,3 +1,7 @@
 .delete {
   color: red;
 }
+
+.delete:hover {
+  color: #f00000;
+}
